@@ -35,7 +35,7 @@ def generate_bash_script_linux_macos(contributions_list: list):
 
 
 def generate_bash_script_windows(contributions_list: list):
-    bash_script = open('script.sh', 'w')
+    bash_script = open('script.cmd', 'w')
     for each_day_data in contributions_list:
         script = f"""set GIT_AUTHOR_DATE={each_day_data['date']}T12:00:00 && set GIT_COMMITER_DATE={each_day_data['date']}T12:00:00 && git commit --allow-empty -m "Rewriting History!" > /dev/null\n"""
         for each_contribution in range(each_day_data['contributions']):
@@ -57,12 +57,16 @@ if __name__ == "__main__":
     if system() == 'Windows':
         generate_bash_script_windows(contributions_list=contributions_list)
         print("Script successfully generated!!!!")
+        is_execute = input("Do you want to execute the generated script ? (Y/n): ")
+        if is_execute == 'Y' or is_execute == 'y':
+            run('script.cmd', shell=True)
     elif system() in ('Linux', 'Darwin'):
         generate_bash_script_linux_macos(contributions_list=contributions_list)
         print("Script successfully generated!!!!")
+        is_execute = input("Do you want to execute the generated script ? (Y/n): ")
+        if is_execute == 'Y' or is_execute == 'y':
+            run(['sh', 'script.sh'], shell=True)
     else:
         raise Exception("OS not supported!!")
     
-    is_execute = input("Do you want to execute the generated script ? (Y/n): ")
-    if is_execute == 'Y' or is_execute == 'y':
-        run(['sh', 'script.sh'])
+   
