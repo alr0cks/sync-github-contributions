@@ -5,6 +5,7 @@ from subprocess import run
 
 def get_contributions_data_per_day(username: str, year: int):
     url = f"https://github.com/users/{username}/contributions?tab=overview&from={year}-01-01&to={year}-12-31"
+    # backup_url = f"https://github.com/{username}?tab=overview&from={year}-01-01&to={year}-12-31"
 
     resp = requests.get(url).content
     data = BeautifulSoup(resp, 'html.parser')
@@ -18,8 +19,8 @@ def get_contributions_data_per_day(username: str, year: int):
             daily_contributions_list.append({'date': date, 'contributions': number_of_contributions })
             total_contributions += number_of_contributions
     
-    
     return daily_contributions_list, total_contributions
+
 
 def generate_bash_script_linux_macos(contributions_list: list):
     bash_script = open('script.sh', 'w')
@@ -46,4 +47,3 @@ if __name__ == "__main__":
     is_execute = input("Do you want to execute the generated script ? (Y/n): ")
     if is_execute == 'Y' or is_execute == 'y':
         run(['sh', 'script.sh'])
-
