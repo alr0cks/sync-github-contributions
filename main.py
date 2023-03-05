@@ -37,7 +37,7 @@ def generate_bash_script_linux_macos(contributions_list: list):
 def generate_bash_script_windows(contributions_list: list):
     bash_script = open('script.cmd', 'w')
     for each_day_data in contributions_list:
-        script = f"""set GIT_AUTHOR_DATE={each_day_data['date']}T12:00:00 && set GIT_COMMITER_DATE={each_day_data['date']}T12:00:00 && git commit --allow-empty -m "Rewriting History!" > /dev/null\n"""
+        script = f"""set GIT_AUTHOR_DATE={each_day_data['date']}T12:00:00 && set GIT_COMMITER_DATE={each_day_data['date']}T12:00:00 && git commit --allow-empty -m "Rewriting History!"\n"""
         for each_contribution in range(each_day_data['contributions']):
             bash_script.write(script)
     bash_script.write("git pull origin main\n") 
